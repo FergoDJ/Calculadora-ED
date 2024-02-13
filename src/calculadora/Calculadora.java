@@ -1,5 +1,5 @@
 package calculadora;
-
+// hola mundo este es un comentario
 //import java.util.Stack;
 
 /*
@@ -27,6 +27,7 @@ public class Calculadora {
     //Funcion de utilidad para verificar si la expresion infija tiene completos los parantesis
     public static boolean balanceParentesis(String cadena) {
 	PilaA <Character> pila = new PilaA<>(cadena.length());
+    int k;
 	char c;
         boolean res = false, exception = false;
 
