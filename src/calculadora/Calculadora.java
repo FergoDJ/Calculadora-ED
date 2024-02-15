@@ -12,7 +12,7 @@ package calculadora;
 
 /** LAFARGA
  * 
- * @author HP
+ * @author HP Lafarga
  */
 
 //infijo a postfijo
@@ -27,8 +27,8 @@ public class Calculadora {
     //Funcion de utilidad para verificar si la expresion infija tiene completos los parantesis
     public static boolean balanceParentesis(String cadena) {
 	PilaA <Character> pila = new PilaA<>(cadena.length());
-    int k;
-	char c;
+
+        char c;
         boolean res = false, exception = false;
 
         int i = 0; 
@@ -73,7 +73,7 @@ public class Calculadora {
     
     //Funcion utilidad para verificar si un token es un operador
     public static boolean esOperador(char c){
-        boolean res = (c =='+' || c =='-' || c =='*' || c =='/');
+        boolean res = (c =='+' || c =='-' || c =='*' || c =='/' || c=='^');
         
         return res;
     }
@@ -92,7 +92,6 @@ public class Calculadora {
         char c, pop;
         
         if(balanceParentesis(cadena)){
-            //for hecho while para modificaciones futuras al algor.
             int i=0;
             while(i<cadena.length()){
                 c = cadena.charAt(i);
