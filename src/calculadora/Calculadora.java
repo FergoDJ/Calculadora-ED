@@ -23,6 +23,10 @@ public class Calculadora {
     public Calculadora(String cadena){
         this.cadena=cadena;
     }
+
+    public String getCadena() {
+        return cadena;
+    }
     
     //Funcion de utilidad para verificar si la expresion infija tiene completos los parantesis
     public static boolean balanceParentesis(String cadena) {
