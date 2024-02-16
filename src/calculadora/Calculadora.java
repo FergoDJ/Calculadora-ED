@@ -65,7 +65,7 @@ public class Calculadora {
     public static int marcaPrioridad(char c){ 
         int prioridad = -1;
         
-        if(c=='^')
+        if(c == '^')
             prioridad = 4;
         else if(c=='*' || c=='/')
                 prioridad=3;
