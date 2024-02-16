@@ -6,7 +6,7 @@ package calculadora;
 
 
 /**
- *
+ *  a coment here :)
  * @author raulvelascoreyes
  */
 public class Ventana extends javax.swing.JFrame {
