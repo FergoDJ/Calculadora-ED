@@ -444,6 +444,8 @@ public class Ventana extends javax.swing.JFrame {
         
     }
 
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Barra;
     private javax.swing.JButton Cero;
