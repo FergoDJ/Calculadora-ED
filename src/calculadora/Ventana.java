@@ -370,7 +370,7 @@ public class Ventana extends javax.swing.JFrame {
     }//GEN-LAST:event_PotenciaActionPerformed
 
     private void PorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PorActionPerformed
-        Barra.setText(Barra.getText()+"x");
+        Barra.setText(Barra.getText()+"*");
     }//GEN-LAST:event_PorActionPerformed
 
     private void MenosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenosActionPerformed
@@ -400,12 +400,15 @@ public class Ventana extends javax.swing.JFrame {
     private void IgualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IgualActionPerformed
         String infijo = Barra.getText();
         
-        Calculadora calculadora=new Calculadora(infijo);
-        int res = calculadora.calcular();
+        Calculadora calcu=new Calculadora(infijo);
+        double res = calcu.calcular();
         Barra.setText("" + res);
-        System.out.println("infijo: "+ calculadora.getCadena());
-        System.out.println("postijo: " + Calculadora.infixToPostfix(infijo));
-        System.out.println("calculado: "+ calculadora.calcular());
+        System.out.println("infijo: "+ calcu.getCadena());
+        System.out.println("infijo en Arreglo" + Calculadora.encontrarArreglo(infijo).toString());
+        System.out.println("postijo: " + Calculadora.infixToPostfix(infijo).toString());
+        System.out.println("calculado: "+ calcu.calcular());
+        System.out.print("\n" + calcu.getCadena() + "  --->  " + Calculadora.encontrarArreglo(infijo)+ "  --->  " + Calculadora.infixToPostfix(infijo)); //Prueba funcional sin decimales ni negativos		System.out.print("\n"+calcu.infixToPostfixConComas());//Prueba funcional que ocupa comas para separar elementos
+        System.out.println("\n" + calcu.calcular());
     }//GEN-LAST:event_IgualActionPerformed
 
     /**
