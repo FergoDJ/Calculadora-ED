@@ -12,33 +12,37 @@ import java.util.ArrayList;
 //import java.util.Stack;
 
 
-/** LAFARGA
- * 
+/** 
+ * Clase calculadora donde se encuentran los metodos principales de la calculadora
  * @author HP Lafarga
  */
-
-//infijo a postfijo
 
 public class Calculadora {
     private String cadena;
     
+    /**
+     * Constructor de la clase Calculadora.
+     * @param cadena La cadena de entrada para la calculadora.
+     */
     public Calculadora(String cadena){
         this.cadena=cadena;
     }
 
+    /**
+     * Obtiene la cadena actual de la calculadora.
+     * @return La cadena actual.
+     */
     public String getCadena() {
         return cadena;
     }
     
-    //!Falta poner para que opere los negativos!!
     /**
-     * Método que inserta los valores en el arreglo infijo
-     * @param cadena
-     * @return 
+     * Encuentra los elementos de la cadena original y los almacena en un arreglo.
+     * @param cadena La cadena original.
+     * @return Un ArrayList de elementos.
      */
     public static ArrayList<String> encontrarArreglo(String cadena){
         ArrayList<String> arregloInfijo = new ArrayList<>();
-       // int numElementos = 0;
         int i = 0; //contador
         String elemento = "";//Variable auxiliar para guardar los caracteres
       
@@ -64,18 +68,17 @@ public class Calculadora {
                             4 x neg mult   →  4 0 x sub mult
                             2 x neg y add mult   →   2 0 x sub y add mult
                 */
-                    if(i == 0 || cadena.charAt(i-1) =='(' || cadena.charAt(i - 1) == '*' || cadena.charAt(i - 1) == '/'){
+                    if(i == 0 || cadena.charAt(i-1) =='('){
                         arregloInfijo.add("0");
-                        //numElementos++;
                         arregloInfijo.add( "-");
-                        //numElementos++;
-                        elemento = "";
-                        //numElementos++;
+                        elemento = "";                      
+                    }
+                    else if(cadena.charAt(i - 1) == '*' || cadena.charAt(i - 1) == '/'){
+                        //haver nada
                     }
                     else{
                         arregloInfijo.add(elemento); //agrega el elemento al arreglo
-                        elemento = "";
-                        //numElementos++;
+                        elemento = "";                       
                     }
                 }
                 
@@ -83,7 +86,7 @@ public class Calculadora {
                 else{
                     arregloInfijo.add(elemento); //agrega el elemento al
                     elemento = "";
-                    //numElementos++;
+                    
                 }
             }
             i++;
@@ -93,76 +96,39 @@ public class Calculadora {
         //Pregunta si el penúltimo y último elemento fueron signos, por ejemplo 2+(5x(3-2))
         if(esSigno(cadena.charAt(i)+"") && elemento.equals("")){ 
             arregloInfijo.add(cadena.charAt(i)+"");
-            //numElementos++;
+            
         //Pregunta si el penúltimo elemento fue número y si el último fue signo, por ejemplo 2+(5x3-2.23)
         }else if (esSigno(cadena.charAt(i)+"")){
             arregloInfijo.add(elemento);
-            //numElementos++;
+            
             arregloInfijo.add(cadena.charAt(i)+"");
-            //numElementos++;
+            
         //Pregunta si el último elemento fue número, se asegura de guardar lo que quedó en la variable "elemento", ejemplo 2+2.23
         }else{
             elemento+=cadena.charAt(i)+"";
             arregloInfijo.add(elemento);
-            //numElementos++;
+            
         }
-        //arregloInfijo[cadena.length()] = numElementos + "";
+        checaErrores.parentesisEnNegativos(arregloInfijo);
         
         return arregloInfijo;
     }
 
     /**
-     * Metodo que determina si un caracter es signo
-     * @param c
-     * @return 
+     * Verifica si un carácter es un signo (operador).
+     * @param c El carácter a verificar.
+     * @return true si es un signo, false en caso contrario.
      */
     public static boolean esSigno(String c){
         return c.equals("+") || c.equals("-") || c.equals("*") || c.equals("/") || c.equals("^") || c.equals("(") || c.equals(")");
     }
     
-    
-    
-    /**Funcion de utilidad para verificar si la expresion infija tiene completos los parantesis
-     * 
-     * @param cadena
-     * @return 
-     */
-    public static boolean balanceParentesis(String cadena) {
-	PilaA <Character> pila = new PilaA<>(cadena.length());
-
-        char c;
-        boolean res = false, exception = false;
-
-        int i = 0; 
-        while(i < cadena.length() && !exception){
-            c = cadena.charAt(i);
-            if (c == '(') {
-                pila.push(c);
-                } 
-            else{
-                if (c == ')') {
-                    try{
-                        pila.pop();
-                    }
-                    catch (ExcepcionColeccionVacia e){
-                        exception = true;
-                       // System.err.print(e);
-                    }
-                }
-            }
-            i++;
-        }
-        if(!exception)
-            res = pila.isEmpty(); // Si la pila está vacía, los paréntesis están balanceados
-        return res;
-    }
-    
     /**
-     * Funcion de utilidad para devolver la prioridad o precedencia del operador
-     * entre mayor sea la precendencia, menor su valor, se sigue jerarquia de operaciones
-     * @param c
-     * @return prioridad
-    */
+     * Devuelve la prioridad o precedencia del operador.
+     * Cuanto mayor sea la precedencia, menor será su valor.
+     * @param ch El operador.
+     * @return La prioridad del operador.
+     */
     public static int marcaPrioridad(char ch){ 
         int prioridad = -1;
         
@@ -177,17 +143,16 @@ public class Calculadora {
     }
     
     /**
-     * Funcion utilidad para verificar si un token es un operador
-     * 
-     * @param c
-     * @return boolean
+     * Verifica si un token es un operador.
+     * @param c El token a verificar.
+     * @return true si es un operador, false en caso contrario.
      */
     public static boolean esOperador(String c){
         return (c.equals("+") || c.equals("-") || c.equals("*") || c.equals("/") || c.equals("^"));
     }
     
     
-        /**
+    /**
      * Función que convierte una expresión infija en postfija
      * @param cadena La expresión infija
      * @return Un arreglo de cadenas con la expresión postfija
@@ -198,9 +163,9 @@ public class Calculadora {
         String c;
         char ch, chPop;
         ArrayList<String> arregloInfijo;
+        arregloInfijo = encontrarArreglo(cadena);        
 
-        if (balanceParentesis(cadena)) {
-            arregloInfijo = encontrarArreglo(cadena);
+        if (checaErrores.verificaBalanceExpresion(cadena)) {
             
             //int numElementos = 0;
             int cantElementosArr = arregloInfijo.size();
@@ -218,7 +183,7 @@ public class Calculadora {
                     chPop = pila.pop();
                     while(chPop != '('){
                         sufijo.add("" + chPop);
-                        //numElementos++;
+                        
                         chPop = pila.pop();
                     }
                 }
@@ -230,7 +195,7 @@ public class Calculadora {
                     while(!pila.isEmpty() && pila.peek()!='(' && marcaPrioridad(ch) <= marcaPrioridad(pila.peek()) ){
                         chPop = pila.pop();                        
                         sufijo.add("" + chPop);
-                        //numElementos++;
+                        
                     }
                     //colocar el operador en el stack
                     pila.push(ch);
@@ -241,7 +206,7 @@ public class Calculadora {
                 //caso 4: si el token actual es un operando (numero, letra o punto), o lo que sea
                 else{
                     sufijo.add(c);
-                    //numElementos++;
+                    
                 }
                 
                 //System.out.print(" sufix:" + sufijo.toString());
@@ -250,7 +215,7 @@ public class Calculadora {
             //vaciar el stack de operadores y agregsarlos a la expresion sufijo
             while (!pila.isEmpty()) {
                 sufijo.add( "" + pila.pop());
-                //numElementos++;
+                
 
             }
             //sufijo[cadena.length()] = numElementos + "";
@@ -260,10 +225,9 @@ public class Calculadora {
     }
     
     /** Función para evaluar una expresión de postfijo dada
-     * 
-     * @param exp
-     * @param cadena
-     * @return 
+     * @param exp La expresión postfija.
+     * @param cadena La cadena original.
+     * @return El resultado de la evaluación.
      */
     public static double evalPostfix(ArrayList<String> exp, String cadena){
         // caso base
@@ -313,14 +277,13 @@ public class Calculadora {
                 }
             }
         }
- 
         // En este punto, la stack se queda con un solo elemento, es decir, resultado de la expresión
         return stack.pop();
     }
     
     /**
-     * Funcion calcular que alplica todos los metodos estaticos
-     * @return 
+     * Calcula el resultado de la expresión dada.
+     * @return El resultado de la expresión.
      */
     public double calcular(){
         ArrayList<String> sufijo = infixToPostfix(cadena);
@@ -328,8 +291,7 @@ public class Calculadora {
         
         return res;
     }
-    
-    
+   
     
     public static void main(String[] args) {
 	Calculadora calcu=new Calculadora("5*((2+4)-2)");
@@ -347,7 +309,6 @@ public class Calculadora {
 
         
         Calculadora calcu4 = new Calculadora("(1*2)*3+4*5+6");
-        System.out.println("\n" + balanceParentesis(calcu4.cadena));
         System.out.println("\n" + infixToPostfix(calcu4.cadena));
         
         Calculadora calcu5 = new Calculadora("A+B*(C+D)*(E*F+G)");

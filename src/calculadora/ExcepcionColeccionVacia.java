@@ -5,16 +5,18 @@
 
 package calculadora;
 
-/** Lafarga
- * 
- * @author HP
+/**
+ * Clase ExcepcionColeccionVacia: Representa una excepción personalizada para indicar que una colección está vacía.
+ * Autor: HP Lafarga
  */
-
 
 public class ExcepcionColeccionVacia extends RuntimeException {
 
-    public ExcepcionColeccionVacia(String mensaje) {
-        
+    /**
+     * Constructor de la excepción.
+     * @param mensaje El mensaje de error asociado a la excepción.
+     */
+    public ExcepcionColeccionVacia(String mensaje) {     
         super(mensaje);
     }
 
