@@ -6,7 +6,7 @@ package calculadora;
 
 
 /**
- *  a coment here :)
+ * Clase Ventana para crear la GUI de la calculadora
  * @author raulvelascoreyes
  */
 public class Ventana extends javax.swing.JFrame {
