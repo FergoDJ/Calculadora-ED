@@ -5,8 +5,9 @@
 package calculadora;
 
 /**
- *
+ * Clase PilaA: Implementa una pila genérica utilizando un arreglo.
  * @author HP Lafarga
+ * @param <T> El tipo de dato que se almacenara en la pila
  */
 public class PilaA <T> implements PilaADT <T>{
 //atributos

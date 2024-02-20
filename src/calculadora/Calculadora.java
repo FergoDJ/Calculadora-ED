@@ -73,7 +73,7 @@ public class Calculadora {
                         arregloInfijo.add( "-");
                         elemento = "";                      
                     }
-                    else if(cadena.charAt(i - 1) == '*' || cadena.charAt(i - 1) == '/'){
+                    else if(cadena.charAt(i - 1) == '*' || cadena.charAt(i - 1) == '/' || cadena.charAt(i-1) == '^'){
                         //haver nada
                     }
                     else{
@@ -326,4 +326,3 @@ public class Calculadora {
     }
 
 }
-
