@@ -52,41 +52,36 @@ public class Calculadora {
             elemento += cadena.charAt(i)+"";
             
             if(esSigno(cadena.charAt(i + 1) + "") || esSigno(elemento)){
-                // !!!Atencion a negativos!!, creo que ya quedo pero npi
+                // !!!Atencion a negativos!!
                 if(elemento.equals("-")){
-                /*You've got a negation, when the minus is at the beginning of the expression
-                or after an opening parenthesis or after a binary operator   
-                ex:         − (x + y)   →   x y add neg
-                            4 × − x   →   4 x neg mult
-                            2 × (− x + y)   →   2 x neg y add mult
-                You've got a subtraction when the minus is after a closing parenthesis or after a symbol, i.e. after a variable or number:
-                ex:          1 − x   →   1 x sub
-                            (4 ∗ x) − 1   →   4 x mult 1 sub
-
-                Take care that the unary operator neg just takes one argument off the stack. If you want to stick with binary operators, you can push a zero before the second operand and use binary sub:
-                            − (x + y)   →   0 x y add sub
-                            4 x neg mult   →  4 0 x sub mult
-                            2 x neg y add mult   →   2 0 x sub y add mult
-                */
                     if(i == 0 || cadena.charAt(i-1) =='('){
                         arregloInfijo.add("0");
                         arregloInfijo.add( "-");
                         elemento = "";                      
                     }
-                    else if(cadena.charAt(i - 1) == '*' || cadena.charAt(i - 1) == '/' || cadena.charAt(i-1) == '^'){
-                        //haver nada
+                    else if(cadena.charAt(i - 1) == '*' || cadena.charAt(i - 1) == '/' || cadena.charAt(i-1) == '^'){ //con operadores
+                        //hacer nada
                     }
                     else{
-                        arregloInfijo.add(elemento); //agrega el elemento al arreglo
+                        arregloInfijo.add(elemento); //agrega el elemento al arreglo para la substraccion
                         elemento = "";                       
                     }
                 }
-                
+                //si hay un parentesis y hay un numero antes entonces se esta multiplicando
+                else if(elemento.equals("(") && i>0 && !esSigno(cadena.charAt(i-1)+"")){
+                    arregloInfijo.add("*");
+                    arregloInfijo.add(elemento);
+                    elemento = "";
+                }
+                else if(elemento.equals(")") && i<cadena.length() && !esSigno(cadena.charAt(i+1)+"")){
+                    arregloInfijo.add(elemento);
+                    arregloInfijo.add("*");
+                    elemento = "";
+                }
                 //Si encuentra un signo en el siguiente indice, vacía los números, y en el siguiente ciclo dejará el signo encontrado
                 else{
                     arregloInfijo.add(elemento); //agrega el elemento al
                     elemento = "";
-                    
                 }
             }
             i++;
@@ -283,6 +278,7 @@ public class Calculadora {
     
     /**
      * Calcula el resultado de la expresión dada.
+     * Integra y utiliza todos los metodos estaticos anteriores para calcular
      * @return El resultado de la expresión.
      */
     public double calcular(){
@@ -292,7 +288,10 @@ public class Calculadora {
         return res;
     }
    
-    
+    /**
+     * Este es un main de prueba que se utilizo para probar la funcionalidad del metodo calcular y de todos los metodos de la clase Calculadora
+     * @param args
+     */
     public static void main(String[] args) {
 	Calculadora calcu=new Calculadora("5*((2+4)-2)");
 	System.out.print("\n" + calcu.cadena + "  --->  " + Calculadora.encontrarArreglo(calcu.cadena)+ "  --->  " + Calculadora.infixToPostfix(calcu.cadena)); //Prueba funcional sin decimales ni negativos		System.out.print("\n"+calcu.infixToPostfixConComas());//Prueba funcional que ocupa comas para separar elementos
